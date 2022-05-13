@@ -24,18 +24,18 @@ jobs:
 
       - name: Compile LaTeX document
         run: |
-          cd ./docs/Pflichtenheft/
+          cd ./Pflichtenheft/
           pdflatex -synctex=1 -interaction=nonstopmode "Pflichtenheft.tex" 
           makeindex -s nomencl.ist -o Pflichtenheft.nls Pflichtenheft.nlo
           pdflatex -synctex=1 -interaction=nonstopmode "Pflichtenheft.tex" 
-          cd ../..        
-          cp ./docs/Pflichtenheft/Pflichtenheft.pdf ./Pflichtenheft.pdf
+          cd ..       
+          cp ./Pflichtenheft/Pflichtenheft.pdf ./Pflichtenheft.pdf
 
       - name: Build Artifact
         uses: actions/upload-artifact@v2
         with:
           name: PDF
-          path: ./docs/Pflichtenheft/Pflichtenheft.pdf
+          path: ./Pflichtenheft/Pflichtenheft.pdf
 
       - name: X-FAB Upload
         run: |
