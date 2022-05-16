@@ -16,16 +16,19 @@ jobs:
           pwd
           ls -a
 
-      - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v2
-        with:
-         root_file: ./Sprintbacklog/Riffecs/Riffecs_Backlog1.tex
-
-      - name: Copy Backlog
+      - name: Install Latex
         run: |
-          pwd
-          ls 
-          cp ./Sprintbacklog/Riffecs_Backlog1.pdf ./Riffecs_Backlog1.pdf
+          sudo apt-get install texlive texlive-lang-german texlive-latex-extra 
+          sudo apt-get install texlive-base 
+
+      - name: Compile LaTeX document
+        run: |
+          cd ./Sprintbacklog/Riffecs
+          pdflatex -synctex=1 -interaction=nonstopmode "Riffecs_Backlog1.tex" 
+          makeindex -s nomencl.ist -o Riffecs_Backlog1.nls Riffecs_Backlog1.nlo
+          pdflatex -synctex=1 -interaction=nonstopmode "Riffecs_Backlog1.tex" 
+          cd ..       
+          cp ./Sprintbacklog/Riffecs/Riffecs_Backlog1.pdf ./Backlog_1_Riffecs.pdf
 
       - name: Build Artifact
         uses: actions/upload-artifact@v2
