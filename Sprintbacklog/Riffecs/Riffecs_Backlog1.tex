@@ -1,0 +1,107 @@
+\documentclass[fleqn,10pt]{olplainarticle}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{mnsymbol}
+\usepackage{wasysym}
+% Use option lineno for line numbers 
+
+\title{Sprintbacklog 1}
+
+\author{Jonathan Skopp}
+\affil{jonathan-erik.skopp@tu-ilmenau.de}
+
+\keywords{PyPi, entry points, Readme, Python, Taschenrechner}
+
+\begin{abstract}
+Hierbei handelt es sich um den ersten Sprintbacklog. Daher steht die Einrichtung und grundlegende Verwaltung im Vordergrund.
+\end{abstract}
+
+\begin{document}
+
+\flushbottom
+\maketitle
+\thispagestyle{empty}
+
+\section*{Aufgaben}
+\begin{enumerate}
+	\item Erstellen eines Repo's für Rion und Inor
+	\item Auslagern der Dokumente für das SWP in ein eigenständiges Repo
+	\item Konfigurieren der Ordnerstruktur für das Projekt
+	\item Erstellen der entry points für die jeweiligen Packages
+	\item Erstellen der console scripts für die jeweiligen Packages
+	\item Erstellen eines Taschenrechners in Python für triviale Terme
+	\item Anpassen der Readme Files 
+\end{enumerate}
+
+
+\section*{Aufgabe 1 und 2}
+Die Aufgabe ist als erledigt anzusehen. Jedes Git verfolgt eine genaue Aufgabe. Ich werde unten noch einmal erläutern, welche ist.  
+\begin{itemize}
+	\item Rion \footnote{\url{https://github.com/Riffecs/rion}}:  Dieses Repo beinhaltet alle Dokumentationen und jeglichen Quellcode, der für das Rion CLI der X-Fab notwendig ist.
+	\item Inor \footnote{\url{https://github.com/Riffecs/inor}}:  Dieses Repo beinhaltet alle Dokumentationen und jeglichen Quellcode, der für das Server Backend der X-Fab notwendig ist.
+	\item Softwareprojekt \footnote{\url{https://github.com/Riffecs/Softwareprojekt}}:
+	Das Repo beinhaltet alle Unterlagen, welche in Latex für das Softwareprojekt verfasst wurden sind.
+\end{itemize}
+	
+Alle Repos sind mit entsprechenden Workflows ausgestattet. So haben alle Repos mit Quellcode einen Linter und einen Deploy Workflow. Der Linter reagiert auf Push auf dem Main branch und der Deploy reagiert auf das erstellen von Releases.\\
+Selbstverständlich haben nur berechtigte User Zugriff	
+
+\subsection*{Probleme}
+Bei diesen 2 Aufgaben sind keine Probleme aufgetreten.
+
+
+\clearpage
+
+\section*{Aufgabe 3}
+Ich habe mich bei der Ordnerstruktur an die Standardvorgaben gehalten. Je nach Einschätzung des Scrum Masters über die Abhängigkeiten kann die Struktur noch verändert werden. Die Grundstruktur steht jedoch so weit fest und kann genutzt werden. \\
+Die Ordnerstruktur kann auf GitHub eingesehen werden. Daher bedarf es hier keines Beispiels. 
+
+
+\subsection*{Probleme}
+Bei dieser Aufgabe sind keine Probleme aufgetreten.
+
+
+
+\section*{Aufgabe 4 und 5}
+Diese Aufgabe war im Vergleich zu den anderen die interessanteste. Das Python Projekt sollte direkt über die Shell (oder ähnliches) startbar sein. Daher musste der Console gesagt werden, wo die Datei "liegt" und wo er "einsteigen" soll.Auch wenn hier kaum Quelltext geschrieben wurde, ist diese Aufgabe extrem relevant und wichtig für das fortlaufende Projekt, da es Einfluss auf den Code Layout nimmt.
+
+
+\subsection*{Probleme}
+Bei dieser Aufgabe sind Probleme aufgetreten. Die Entrypoints wurden von der Console weder unter Windows noch unter Linux korrekt ausgeführt. Trotz korrekter Syntax. \\
+Da ich nicht weiter wusste, habe ich auf Stackoverflow nach Rat gesucht \footnote{\url{https://stackoverflow.com/questions/72243349/problems-with-pip-und-command-line}}.
+
+\begin{lstlisting}[frame=single] 
+	pip list | grep pdfx
+	which pdfx
+	# pdfx not found
+	export PATH="$HOME/.local/bin:$PATH"
+\end{lstlisting}
+Nachzulesen im öffentlichen Gist\footnote{\url{https://gist.github.com/Riffecs/a35a2fe1a608a245fc6f770171b2e0f8}}. \vspace{0.2cm} \\
+Python hat in allen Betriebsystemen die eigenart nur gewissen Ordner zu durchsuchen. Egal ob diese relevant sind oder nicht. Daher musste der Pfand händisch ergänzt werden.
+
+\section*{Aufgabe 6}
+Mein Taschenrechner ist ebenfalls als Gist vorhanden\footnote{\url{https://gist.github.com/Riffecs/daf78fad9cb131bc04796672eff3b953}}. \\
+Es wurde ein Taschenrechner geschrieben, der triviale Terme löst. Beispielsweise. 2+2 oder 2-2. 
+Mehr war hier nicht das Ziel. Es ging darum, ein Händchen für Programmierung zu gewinnen. 
+Diese Aufgabe war Zusatz für mich, da ich bereits Programmieren kann. \smiley{} \\
+Ich bitte darum die Anmerkungen im entsprechenden Gist zu lesen.
+
+\subsection*{Probleme}
+Es gab kleine Probleme bei dem Nesting mit 2x Minus. Beispiel: $\text{Term: }2--2$. Das lag mehr daran, das ich das beim ersten Versuch vergessen hatte und dann nachträglich implementiert habe. Ich gestehe, dass die gewählte Lösung mehr schlecht als recht ist. Die Lösung ist funktionsfähig. Die Lösung zeigt diverse Elemente der Programmiersprache und erfüllt daher das Ziel der Aufgabe.
+
+\cleardoublepage
+\section*{Aufgabe 7}
+Die Readme Datei für Inor und Rion sind aktuell. Sie halten sich an die Vorlage im Pflichtenheft\footnote{\url{https://ftp.riffecs.com/SWP/Pflichtenheft.pdf}}. Daher gibt es dazu nichts mehr zu sagen.
+
+\subsection*{Probleme}
+Für die aktuelle Aufgabe gab es keine Probleme.
+
+
+\section*{Abschluss}
+Die Python Packages Rion\footnote{\url{https://pypi.org/project/rion/}} und Inor\footnote{\url{https://pypi.org/project/inor/}} sind über pip installierbar. Man kann diese normal über die CLI (Bash oder ZSH) starten.\\
+Die Projekte haben eine ordentliche Ordnerstruktur und eine normale Verwaltung über das git.
+
+
+%\bibliography{sample}
+
+\end{document}
