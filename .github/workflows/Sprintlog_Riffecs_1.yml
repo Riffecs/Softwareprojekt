@@ -21,6 +21,9 @@ jobs:
           sudo apt-get install texlive texlive-lang-german texlive-latex-extra 
           sudo apt-get install texlive-base 
 
+      - name: Overleaf
+        run: sudo apt-get texlive-olplainarticle
+
       - name: Compile LaTeX document
         run: |
           cd ./Sprintbacklog/Riffecs
@@ -34,11 +37,11 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: PDF
-          path: ./Riffecs_Backlog1.pdf
+          path: ./Backlog_1_Riffecs.pdf
 
       - name: X-FAB Upload
         run: |
-          python upload.py ./Riffecs_Backlog1.pdf
+          python upload.py ./Backlog_1_Riffecs.pdf
         env:
           key: ${{ secrets.FTP_PASSWORD }}
           user: ${{ secrets.FTP_USER }}
