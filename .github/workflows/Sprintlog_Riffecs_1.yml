@@ -11,21 +11,15 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
 
-
-      - name: Install Latex
-        run: |
-          sudo apt-get install texlive texlive-lang-german texlive-latex-extra 
-          sudo apt-get install texlive-base 
-
       - name: Where am I 
         run: |
           pwd
           ls -a
 
-       - name: Compile LaTeX document
-         uses: xu-cheng/latex-action@v2
-         with:
-          root_file: ./Sprintbacklog/Riffecs/Riffecs_Backlog1.tex
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v2
+        with:
+         root_file: ./Sprintbacklog/Riffecs/Riffecs_Backlog1.tex
 
       - name: Copy Backlog
         run: |
