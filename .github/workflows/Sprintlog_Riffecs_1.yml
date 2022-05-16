@@ -1,0 +1,52 @@
+name: Sprintlog_Riffecs_1
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+
+      - name: Install Latex
+        run: |
+          sudo apt-get install texlive texlive-lang-german texlive-latex-extra 
+          sudo apt-get install texlive-base 
+
+      - name: Where am I 
+        run: |
+          pwd
+          ls -a
+
+       - name: Compile LaTeX document
+         uses: xu-cheng/latex-action@v2
+         with:
+          root_file: ./Sprintbacklog/Riffecs/Riffecs_Backlog1.tex
+
+      - name: Copy Backlog
+        run: |
+          pwd
+          ls 
+          cp ./Sprintbacklog/Riffecs_Backlog1.pdf ./Riffecs_Backlog1.pdf
+
+      - name: Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: PDF
+          path: ./Riffecs_Backlog1.pdf
+
+      - name: X-FAB Upload
+        run: |
+          python upload.py ./Riffecs_Backlog1.pdf
+        env:
+          key: ${{ secrets.FTP_PASSWORD }}
+          user: ${{ secrets.FTP_USER }}
+          server: ${{ secrets.FTP_SERVER }}
+
+      - name: Clean Git
+        run: |
+          git clean -fX 
