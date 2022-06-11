@@ -1,0 +1,363 @@
+\documentclass[fleqn,10pt]{olplainarticle}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{mnsymbol}
+\usepackage{wasysym}
+\usepackage{listings}
+% Use option lineno for line numbers 
+
+\title{Code Overview}
+
+\author{Jonathan Skopp}
+\affil{jonathan-erik.skopp@tu-ilmenau.de}
+
+\keywords{Code, Python, Overview, Module}
+
+\begin{abstract}
+Hierbei handelt es sich um eine Übersich über alle Module für Rion und einer kurzen Erklärung daraus. Da Projekt kommt komplett ohne Frameworks aus.
+Stand: \today, 
+\end{abstract}
+
+\begin{document}
+
+\flushbottom
+\maketitle
+\thispagestyle{empty}
+
+
+\section{\_\_init\_\_.py}
+\subsection{Imports}
+\begin{itemize}
+    \item sys (nativ)
+    \item numpy \footnote{\url{https://github.com/numpy/numpy}}
+    \item from rion import errors (für das Error Handling)
+    \item from rion import runner (zum Ausführen der Befehle)
+\end{itemize}
+\subsection{Beschreibung}
+Das ist der Eigentliche Startpunkt des Modules. Es liest aus args alle Werte aus und übergibt diese den einzelnen Funktionen.
+\begin{lstlisting}
+if len(sys.argv) >= 2:
+        # Deletes the path and the basic command from the array
+        command_list = np.delete(np.array(sys.argv), [0, 1])
+
+        # Create a variable that stores the main command.
+        loader: str = sys.argv[1]
+
+        # Converts the Numpy array back to a normal list
+        flags: list[str] = np.ndarray.tolist(command_list)
+\end{lstlisting}
+Die Einzelnen Funktionen sind nun in Loader gespeichert und können über einen IF ELSE Block aufgerufen werden.
+\begin{lstlisting}
+        if loader == "install":
+            runner.install(flags)
+        elif loader == "update":
+            runner.update(flags)
+        elif loader == "remove":
+            runner.remove(flags)
+        elif loader == "search":
+            runner.search(flags)
+        elif loader == "list":
+            runner.dlist(flags)
+        elif loader == "freeze":
+            runner.freeze(flags)
+        elif loader == "config":
+            runner.config(flags)
+        elif loader == "check":
+            runner.check(flags)
+        elif loader == "fix":
+            runner.init()
+        else:
+            # If no command was found, it aborts the program.
+            errors.commandnotfound()
+
+    else:
+        errors.noinput()
+\end{lstlisting}
+Es wurde kein Switch Case genutzt weil kein Mensch sowas wirklich SWITCH Case nutzt :)
+
+
+
+\section{\_\_main\_\_.py}
+\subsection{Imports}
+\begin{itemize}
+    \item from . import handler
+\end{itemize}
+\subsection{Beschreibung}
+Das Modul steuert legendlich die Entrypoints und kann eig vernachlässigt werden. Wie gesagt, hier passiert nichts. Über eine If Bed wird nur noch die "ENV" abgefragt. (Das ist umstritten. Wenn man es nicht erwähnen muss, lass es weg :) ) 
+\begin{lstlisting}
+ from . import handler
+
+if __name__ == "__main__":
+    # enable entry points
+    handler()
+\end{lstlisting}
+
+
+
+
+\section{crypt}
+\subsection{Imports}
+\begin{itemize}
+   \item import hashlib (nativ)
+  \item from cryptography.fernet import Fernet \footnote{\url{https://github.com/pyca/cryptography}}
+   \item from numpy import byte (hatten wir schon)
+\end{itemize}
+\subsection{Beschreibung}
+Das Modul kümmert sich eig nur um die Verschlüsselung der Passwörter des Users. Die Passwörter werden symmetrisch verschlüsselt. (Also nicht wie bei RSA )
+\subsection{Probleme}
+Das SHA hat etwas Probleme gemacht, da es wieder erwarten mit Bytes anstelle von Strings arbeitet. 
+\begin{lstlisting}
+ def sha256(fname: str):
+    """
+    Generate SHA Value of a file
+    """
+    sha256_hash = hashlib.sha256()
+    with open(fname, "rb") as docker:
+        for byte_block in iter(lambda: docker.read(4096), b""):
+            sha256_hash.update(byte_block)
+        print(sha256_hash.hexdigest())
+\end{lstlisting}
+
+\subsection{Anmerkung}
+Das komplette Ver und Entschlüsselen läuft über das Modul
+\begin{lstlisting}
+ def encrypt(key: bytes, message: str) -> byte:
+    """
+    Encrypt String
+    """
+    return Fernet(key).encrypt(message.encode())
+
+
+def decrypt(key: bytes, message: str) -> str:
+    """
+    Decrypt String
+    """
+    return Fernet(key).decrypt(message).decode()
+
+\end{lstlisting}
+
+
+
+\section{db.py}
+\begin{itemize}
+    \item sqlite3 (nativ)
+\end{itemize}
+\subsection{Beschreibung}
+Das Modul übernimmt jegliche Verwaltung der Datenbank. Die darin liegenden Module sind eigentlich nur Funktionen mit SQL Commands. Die Kommentare in dem Quellcode sind komplett eindeutig, sodass ich diese hier nicht nochmal aufführe. 
+\subsection{Commands}
+\begin{itemize}
+    \item def create\_database(db\_name: str) -$>$ None:
+    \item def courser(db\_name: str) -$>$ sqlite3.Connection:
+    \item def create\_table(db\_name: str, db\_table: str, db\_header: str) -> None:
+    \item def input\_value(db\_name: str, db\_table: str, db\_content: str) -> None:
+    \item def list\_table(db\_name: str, db\_table: str, db\_header: str) -> list:
+    \item und so weiter: \url{https://github.com/Riffecs/rion/blob/main/rion/db.py}
+\end{itemize}
+
+\section{errors.py}
+\begin{itemize}
+    \item import sys (nativ)
+    \item from termcolor import colored \footnote{\url{https://github.com/hfeeki/termcolor}}
+\end{itemize}
+\subsection{Beschreibung}
+Das Modul ist nur eine lange Liste von Fehlermeldungen die erzeugt werden können. Diese werden dann farblich ausgegeben. Ich gebe hier mal ein Beispiel an.
+\subsection{Example}
+\begin{lstlisting}
+ def noinput() -> None:
+    """
+    The user has not provided any arguments.
+    """
+    print(colored("The user has not made an entry. \n
+    Please check your input.", "red"))
+    sys.exit(-1)
+\end{lstlisting}
+
+\section{helper.py}
+\begin{itemize}
+    \item ctypes
+    \item os
+    \item platform
+    \item uuid
+\end{itemize}
+\subsection{Beschreibung}
+Das Modul ist ein bisschen speziell. Theoretisch liegen hier alle Funktionen die im normalen Source Code nichts zu suchen haben. Bspw alles was mit sudo\footnote{\url{https://en.wikipedia.org/wiki/Sudo}}, lambda \footnote{Term ::= a (Variable) | (Term Term) (Applikation) | \lambda a. Term (Abstraktion)} und sowas zu tun hat. 
+\subsection{Example}
+\begin{lstlisting}
+def testsudo() -> bool:
+    """
+    Checks if a script was started with admin or root rights.
+    """
+    test: bool = True
+    try:
+        is_admin = os.getuid() == 0
+    except AttributeError:
+        is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
+        test = False
+    return test
+\end{lstlisting}
+Das obrige Ding kümmert sich darum heraauszufinden ob der User Admin bzw sudo ist :)
+
+\begin{lstlisting}
+def os_bindings(path: str) -> str:
+    """
+    Changes the paths from Linux to Windows.
+    It's really only about the backslash.
+    """
+    if "Windows" in platform.platform():
+        return path.replace("/", "\\")
+
+    return path
+
+\end{lstlisting}
+Das obrige Ding passt die Pfade dem jeweiligen Betriebssystem an. Keiner mag Apple, deswegen kommt es da auch nicht vor 
+
+\begin{lstlisting}
+def uid() -> str:
+    """
+    Returns a unique random string
+    """
+    return str(uuid.uuid4()).replace("-", "")
+
+
+def dimarray(notbeautiful: str) -> list:
+    """
+    We turn the tuple into a more dimensional array
+    """
+    notbeautiful = notbeautiful.replace("(", "")[1:-1].replace("'", "")
+    return notbeautiful.replace("'", "").split(",")
+\end{lstlisting}
+
+Die obrigen Zwei sind nur 2 alte Lambda Kallkühle. Georg mag keine. Deswegen sind es inzwischen Funktionen geworden.
+
+\section{mktar.py}
+\subsection{imports}
+\begin{itemize}
+    \item os (nativ)
+    \item shutil (nativ)
+    \item tarfile  (nativ)
+    \item from rion import helper (rion)
+\end{itemize}
+\subsection{Beschreibung}
+Das Modul kümmert sich um das Packen und entpacken von tar Files. 
+\subsection{Example}
+\begin{lstlisting}
+def unmake_tarfile(input_filename: str) -> None:
+    """
+    dhghfcgh
+    """
+    os.mkdir(input_filename[:-7])
+    os.chdir(f"{os.getcwd()}/{input_filename}")
+    with tarfile.open(input_filename, "r:gz") as tar:
+        tar.extractall()
+    os.chdir("..")
+\end{lstlisting}
+Wobei mir gerade auffällt, das das etwas redundant ist. 
+
+\section{Package}
+Entfällt
+
+\section{runner}
+\subsection{imports}
+\begin{itemize}
+    \item alle runner\_* Module
+\end{itemize} 
+\subsection{Beschreibung}
+Das Modul kümmert sich darum, das die Commands auch da ankommen wo sie sollen.
+\subsection{Example}
+\begin{lstlisting}
+def upgrade(content: list) -> None:
+    """
+    updates the package list
+    """
+    runner_upgrade.runnable_upgrade("rion.db", content)
+\end{lstlisting}
+
+\section{config}
+\subsection{imports}
+Keine
+\subsection{Beschreibung}
+Das Modul liest die rion.conf aus und speichert alle Werte in einem Dictonary
+\subsection{Example}
+\begin{lstlisting}
+def runnable_config(pathtoconfig: str) -> list:
+    """
+    Read username and password
+    """
+    user: str = ""
+    pwd: str = ""
+
+    # File Open
+    with open(pathtoconfig, encoding="utf8") as config:
+        conflist: list = config.readlines()
+
+    for runner in conflist:
+        if "username" in runner:
+            user = runner.replace("'", '"').split('"')[1]
+
+        if "password" in runner:
+            pwd = runner.replace("'", '"').split('"')[1]
+
+    return ["auth", [user, pwd]]
+\end{lstlisting}
+
+
+\section{install}
+\subsubsection{Imports}
+    \item tarfile (nativ)
+    \item  os (nativ)
+    \item from rion import db (nativ)
+\subsection{Beschreibung}
+Das Modul Installiert ein Package. Aktuell fehlen dort noch (u.a.) die Abhänigkeiten.
+\subsection{Code Example}
+\begin{lstlisting}[breaklines=true]
+ with tarfile.open(content[0], "r") as archive:
+        archive.extractall()
+
+ # Then we change back to the root folder of rion. Unfortunately Linux behaves a bit stupid there
+    os.chdir(pathstring)
+
+ # The version number is part of the package. Therefore it must be read out.
+    pos = lambda docker: abs(docker[::-1].find("v-") - len(docker)) - 1
+    version = content[0][pos(content[0]) : len(content[0]) - 7 : 1].replace("_", ".")
+\end{lstlisting}
+
+
+\section{search}
+\subsubsection{Imports}
+    \item from rion import db
+    \item  from rion import errors
+    \item from rion import helper
+\subsection{Beschreibung}
+Das Modul sucht aus der Datenbank ein gewünschtes package
+\subsection{Code Example}
+\begin{lstlisting}[breaklines=true]
+  # outputty contains an array of all records from corresponding table
+    outputty: list = db.list_table(db_name, header_name, table_name)
+
+    # We need three lists to represent the three differnt search priorities.
+    exact: list = []
+    moreorless: list = []
+    indescrib: list = []
+
+    # Now that we have them, we use this neet for loop, to go through the array
+    # and add the items to the list, that we want.
+    for igit in outputty:
+        # Here we cast a tuple into a string.
+        # This doesn't look very great, but it works.
+        igit: str = str(igit)
+        # We cut off everything useless from the original string,
+        # so that only the package name remains.
+        igitx: str = igit[2 : igit.index(",")][:-1]
+        # The case occurs when the name is exactly the same.
+        # Upper and lower case is respected.
+        if igitx == content:
+            exact.append(igit)
+        # If the user input is anywhere in the string, the following statement is executed.
+        elif content in igitx:
+            moreorless.append(igit)
+        elif content in igit:
+            indescrib.append(igit)
+\end{lstlisting}
+
+
+\end{document}
