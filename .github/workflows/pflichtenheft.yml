@@ -37,14 +37,6 @@ jobs:
           name: PDF
           path: ./Pflichtenheft/Pflichtenheft.pdf
 
-      - name: X-FAB Upload
-        run: |
-          python upload.py ./Pflichtenheft.pdf
-        env:
-          key: ${{ secrets.FTP_PASSWORD }}
-          user: ${{ secrets.FTP_USER }}
-          server: ${{ secrets.FTP_SERVER }}
-
       - name: Clean Git
         run: |
           git clean -fX 
