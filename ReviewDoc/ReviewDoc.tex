@@ -72,10 +72,10 @@
 
 % Hier in die zweite geschweifte Klammer jeweils
 % die persoenlichen Daten und das Thema der Arbeit eintragen:
-\newcommand{\artderausarbeitung}{Pflichtenheft}
+\newcommand{\artderausarbeitung}{Reviewdokument zur Implementierungsphase}
 \newcommand{\namedesautorsI}{P.~Augustin, J.~Skopp, C.~Juin, }
 \newcommand{\namedesautorsII}{G.~Lehmann, A.~Schmidt, R.~Schöne}
-\newcommand{\themaderarbeit}{RION  Package-Manager}
+\newcommand{\themaderarbeit}{RION Package-Manager}
 \newcommand{\xRION}{\RION}
 %% Das passt schon so 
 \newcommand{\namedesautors}{\namedesautorsI \namedesautorsII}
@@ -179,17 +179,21 @@
 \pagenumbering{arabic} % Nummerierung der Seiten ab hier: 1, 2, 3, 4...
 
 %%% Content %%%
-\part*{Pflichtenheft}
+\part*{Review Documentation}
 
-
+\input{Einleitung.tex}
+\input{Grobentwurf.tex}
+\input{RealisierterEntwurf.tex}
+\input{Acronyms.tex}
+\printnomenclature
 %%% Ende %%%
 
-\appendix
-\part*{Anhang}
+%\appendix
+%\part*{Anhang}
 
 
 % Anahng
-\input{anhang}
+%\input{anhang}
 
 
 \end{document}

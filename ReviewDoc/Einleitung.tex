@@ -1,0 +1,43 @@
+\chapter{Einleitung}
+\section{Zweck des Systems}
+Aufgabe ist die Erstellung eines Packagemanagers zur Suche, Installation, Aktualisierung
+und Verwaltung von PDKs. 
+
+\section{Entwurfsziele}
+Der Packagemanager sollte in Python geschrieben werden.\\
+
+Zuzüglich der oben genannten Ziele, sollte der Packagemanager auch das Management von
+Abhängigkeiten, das Verwalten von virtuellen Umgebungen, sowie das Erkennen von bereits
+installierten Paketen ermöglichen. Zudem sollten auch zu jedem Paket ein Informationstext
+in Form von bereits vorliegenden Textdateien angezeigt werden können.\\
+
+
+Serverseitig soll ein Programm die verfügbaren Pakete verwalten können. In einer
+Datenbank, sollen der Name des Paketes, noch festzulegende Metadaten und
+Abhängigkeiten gespeichert sein. Außerdem sollte der Server natürlich, dem
+Packagemanager die Pakete selbst bereit stellen. \\
+
+Client und Server zusammen sollen desweiteren über eine Rechteverwaltung bzw.
+Authentifizierung verfügen, welche es verschieden Nutzern ermöglicht auf verschiedene
+Pakete zuzugreifen.
+
+\clearpage
+\section{Überblick}
+Implementiert wurden zum jetzigen Stand folgende Punkte:
+
+
+\begin{itemize}
+    \item  Entfernen von Paketen
+    \item Suchen von Paketen
+    \item Nutzerauthentifizierung
+    \item Übertragung von Paketen vom Server zum Client
+   \item Verwalten von virtuellen Umgebungen
+   \item Installation von Paketen
+ \item Konfigurationdatei
+\end{itemize}
+
+Noch nicht Implementiert sind:
+\begin{itemize}
+    \item Abhängigkeitenverwaltung
+     \item Programm zur Verwaltung der auf dem Server verfügbaren Paketen
+\end{itemize}
