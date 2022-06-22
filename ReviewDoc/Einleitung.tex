@@ -13,12 +13,12 @@ in Form von bereits vorliegenden Textdateien angezeigt werden können.\\
 
 
 Serverseitig soll ein Programm die verfügbaren Pakete verwalten können. In einer
-Datenbank, sollen der Name des Paketes, noch festzulegende Metadaten und
-Abhängigkeiten gespeichert sein. Außerdem sollte der Server natürlich, dem
-Packagemanager die Pakete selbst bereit stellen. \\
+Datenbank sollen der Name des Paketes, noch festzulegende Metadaten und
+Abhängigkeiten gespeichert sein. Außerdem soll der Server dem
+Packagemanager die Pakete bereit stellen. \\
 
-Client und Server zusammen sollen desweiteren über eine Rechteverwaltung bzw.
-Authentifizierung verfügen, welche es verschieden Nutzern ermöglicht auf verschiedene
+Client und Server zusammen sollen über eine Rechteverwaltung bzw.
+Authentifizierung verfügen, welche es verschiedenen Nutzern ermöglicht, auf verschiedene
 Pakete zuzugreifen.
 
 \clearpage
@@ -27,17 +27,19 @@ Implementiert wurden zum jetzigen Stand folgende Punkte:
 
 
 \begin{itemize}
-    \item  Entfernen von Paketen
+    \item Entfernen von Paketen
     \item Suchen von Paketen
     \item Nutzerauthentifizierung
     \item Übertragung von Paketen vom Server zum Client
    \item Verwalten von virtuellen Umgebungen
    \item Installation von Paketen
- \item Konfigurationdatei
+ \item Konfigurationsdatei
 \end{itemize}
 
-Noch nicht Implementiert sind:
+Noch nicht implementiert sind:
 \begin{itemize}
-    \item Abhängigkeitenverwaltung
-     \item Programm zur Verwaltung der auf dem Server verfügbaren Paketen
+     \item Abhängigkeitenverwaltung
+     \item Programm zur Verwaltung der auf dem Server verfügbaren Pakete
+     \item Erkennen von bereits installierten Paketen
+     \item Aktualisierungen 
 \end{itemize}

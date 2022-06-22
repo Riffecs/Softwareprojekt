@@ -18,8 +18,7 @@
 \end{minipage}
 \\[\intextsep]
 
-Aufgrund technischer Notwendigkeit mussten wir während Implementierungsphase vom
-Alten auf eine Realisierung des neuen Klassendiagramms umsteigen.
+In der Implementierungsphase wurde die Erstellung eines neuen Klassendiagramms, aufgrund von Unzulänglichkeiten des vorigen, notwendig.
     
     
 \section{Sequenzdiagramm}
@@ -33,14 +32,14 @@ Alten auf eine Realisierung des neuen Klassendiagramms umsteigen.
 \clearpage
 
 Entscheidung 1\\
-Aufgabe: Protokoll mit dem Rion auf die Pakete des Servers zugreift\\
+Aufgabe: Protokoll, mit dem RION auf die Pakete des Servers zugreift\\
 
-Ursprünglich war geplant, Rion und INOR via Client-Server-Modell eng miteinader zu
-verknüpfen. In der eigentlichen Implemetierung stellte sich jedoch heraus, dass ein
-klassischer Ansatz sinnvoller ist: \\
+Ursprünglich war geplant, RION und INOR via Client-Server-Modell eng miteinader zu
+verbinden. In der eigentlichen Implemetierung stellte sich jedoch heraus, dass ein
+klassischer Ansatz sinnvoller ist. \\
 
-Inor arbeitet unabhängig von Rion. Seine Aufgabe besteht allein darin, Ordner mit Paketen
-bzw. physichen Links auf Pakete zu befüllen. Auf diese wird dann mittels eines Protokolls
+Inor arbeitet unabhängig von RION. Seine Aufgabe besteht allein darin, Ordner mit Paketen
+bzw. physischen Links auf Pakete zu befüllen. Auf diese wird dann mittels eines Protokolls
 zugegriffen. Hierfür gibt es primär zwei verschlüsselte Optionen:\\
 
 \begin{itemize}
@@ -48,12 +47,12 @@ zugegriffen. Hierfür gibt es primär zwei verschlüsselte Optionen:\\
     \begin{itemize}
         \item Vorteile:
             \begin{itemize}
-                \item beste Übertragungsgescheindigkeit
+                \item beste Übertragungsgeschwindigkeit
             \end{itemize}
         \item Nachteile:
             \begin{itemize}
-                \item  Arbeitet nicht direkt auf Dateienebene
-                \item Aufwendige Impelmentierung der Authentifikation
+                \item Arbeitet nicht direkt auf Dateienebene
+                \item Aufwendige Implementierung der Authentifikation
             \end{itemize}
     \end{itemize}
      \item Option 2: ftps
@@ -66,7 +65,7 @@ Authentifikation in Form von virtuellen Nutzern
         \end{itemize}
         \item Nachteile
         \begin{itemize}
-            \item Nicht die beste, aber immernoch eine sehr gute Geschwindigkeit
+            \item Nicht die beste, aber immer noch eine sehr gute Geschwindigkeit
         \end{itemize}
         Konklusion: Aufgrund der Möglichkeit virtuelle Nutzer anzulegen, ist ftps aus unserer Sicht
 die für RION/INOR richtige Entscheidung.
@@ -77,7 +76,7 @@ die für RION/INOR richtige Entscheidung.
 \end{itemize}
 \clearpage
 
-Entscheidung 2
+Entscheidung 2 \\
 Aufgabe: Festlegen eines Tools zur Verwaltung von installierbaren und installierten Paketen.
 
 \begin{itemize}
@@ -86,12 +85,15 @@ Aufgabe: Festlegen eines Tools zur Verwaltung von installierbaren und installier
         \item Vorteile
         \begin{itemize}
             \item native Einbindung
-            \item komplexer Anfragen funktionieren einfacher
-            \item leichtgewichtigt
+            \item komplexe Anfragen funktionieren einfacher
+            \item leichtgewichtig
         \end{itemize}
         \item Nachteile
-            \item Nicht ohne entsprechendes Programm lesba
+                
+        \begin{itemize}
+            \item Nicht ohne entsprechendes Programm lesbar
             \item Entsprechende Binarys für jede Plattform
+        \end{itemize}
     \end{itemize}
      \item Option 2: json  
     \begin{itemize}
@@ -100,12 +102,16 @@ Aufgabe: Festlegen eines Tools zur Verwaltung von installierbaren und installier
             \item leichtgewichtiger
             \item plain text
         \end{itemize}
+        \item Nachteile
+        \begin{itemize}
+            \item unübersichtlich bei großen Datenmengen
+        \end{itemize}        
     \end{itemize}
 \end{itemize}
 
 Konklusion: Sqlite3 mag den Nachteil haben, dass es normalerweise eine systemspezifische
-Binary benötigt, dies wird jedoch durch die Einbindung in Python umgangen. Dies kombiniert
+Binary benötigt, das wird jedoch durch die Einbindung in Python umgangen. Dies, kombiniert
 mit den einfachen Möglichkeiten für komplexe Anfragen, hat den Ausschlag für Sqlite3
-gegeben
+gegeben.
 
     
