@@ -1,15 +1,14 @@
 \chapter{Testzenarien}
 \begin{itemize}
 	\item[T0110] \textit{Installation:}	Der Nutzer installiert mit \quotes{rion install \textit{Packagename}} ein Paket. Das Paket wird, inklusive eventueller Abhängigkeiten, installiert. Skripte (Post-Install-Prozessierung) werden erfolgreich ausgeführt.\\\\
-	Anforderung kann laut Blackboxtest nur teilweise erfüllt werden. Das Paket wird installier, es existiert aber keine Abhänigkeitsbehandlung
+	\textbf{Anforderung kann laut Blackboxtest nur teilweise erfüllt werden. Das Paket wird installier, es existiert aber keine Abhänigkeitsbehandlung}
 	\item[T0120] \textit{Suchen:} Der Nutzer sucht mit \quotes{rion search \textit{text}} ein Paket und bekommt eine Liste von passenden Paketen, inklusive einer kurzen Beschreibung derer, ausgeben.
-
-
-
+    
+    \textbf{Anforderung wurde laut Blackboxtest erfüllt, wobei bei den Textpaketen keine Beschreibung vorliegt.}
+    
 	\item[T0130] \textit{Information:} Der Nutzer sucht mit \quotes{rion info \textit{Packagename}} Informationen zu einem Paket und bekommt diese detailliert zu einem Paket ausgeben.\\\\
-
-	Anforderung wurde noch nicht implementiert.
-
+	\textbf{Anforderung wurde noch nicht implementiert.}
+	
 	\item[T0140] \textit{Aktualisieren:} Der Nutzer aktualisiert mit \quotes{rion update} alle installierten Pakete. Diese werden aktualisiert. Er aktualisiert mit \quotes{rion upgrade \textit{Packagename}} ein bestimmtes Paket, welches nun aktualisiert wird.\\\\
 
 	\item[T0150] \textit{Entfernen:} Der Nutzer entfernt mit \quotes{rion remove \textit{Packagename/s}} ein oder mehrere Pakete, welche dadurch deinstalliert werden.\\\\
